@@ -23,6 +23,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 public class JsonParsingMain {
 
+	// The program will read the url from properties file and call the parsing method.
+	//the url in properties file should be working and should returns the output json as expected by program
+	
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	public static void main(String args[]){
@@ -32,7 +35,9 @@ public class JsonParsingMain {
 			        "sampleData.properties");
 			Properties props = new Properties();
 				props.load(finputstream);
-				path=props.getProperty("file_path");
+// url will be read from properties file with property name as 'urlToHit' and 
+//value as http://mailer-api/mailer/rest/json/members and pass the url to parseJsonUsingPathId method
+				path=props.getProperty("urlToHit");
 				JsonParsingMain parsrObj =new JsonParsingMain();
 				String message=parsrObj.parseJsonUsingPathId(path);
 				System.out.println("message : "+message);	
@@ -46,8 +51,11 @@ public class JsonParsingMain {
 	
 	public String parseJsonUsingPathId(String url) {
 		String message="Success";
-		JsonNode jsonRes =fetchJsonFromFile(url);
-		// jsonRes = fetchJsonFromUrl("url");
+		//To test the program output can be used this sample method
+		//JsonNode jsonRes =fetchJsonFromFile(url);
+		
+		// actual method to call with url to get json output
+		JsonNode jsonRes = fetchJsonFromUrl(url);
 		if (jsonRes != null) {
 			final Iterator<JsonNode> fields = jsonRes.getElements();
 			int total=0;
